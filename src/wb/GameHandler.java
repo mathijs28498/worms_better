@@ -61,8 +61,8 @@ public class GameHandler {
     public void render(Graphics g) {
         g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 
-        for (GameObject go : projectiles) {
-            go.render(g);
+        for (int i = 0; i < projectiles.size(); i++) {
+            projectiles.get(i).render(g);
         }
         for (GameObject go : playGround) {
             go.render(g);

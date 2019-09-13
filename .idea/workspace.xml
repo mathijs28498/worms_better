@@ -171,8 +171,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-14" />
-    <option name="y" value="-14" />
+    <option name="x" value="-15" />
+    <option name="y" value="-15" />
     <option name="width" value="2020" />
     <option name="height" value="1100" />
   </component>
@@ -222,6 +222,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="restartRequiresConfirmation" value="false" />
   </component>
