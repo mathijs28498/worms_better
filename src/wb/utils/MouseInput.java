@@ -1,7 +1,6 @@
 package wb.utils;
 
 import wb.GameHandler;
-import wb.gameObjects.TestHitbox;
 import wb.gameObjects.projectiles.BasicSquareProjectile;
 import wb.gameObjects.Worm;
 import wb.gameObjects.projectiles.Projectile;
@@ -11,18 +10,15 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.List;
-import java.util.Random;
 
 public class MouseInput implements MouseListener, MouseMotionListener {
 
     private GameHandler gameHandler;
     private List<Worm> worms;
-    private List<Projectile> projectiles;
 
     public MouseInput(GameHandler gameHandler) {
         this.gameHandler = gameHandler;
         worms = gameHandler.getWorms();
-        projectiles = gameHandler.getProjectiles();
     }
 
     @Override
@@ -32,12 +28,12 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
 
-        if (projectiles.size() == 0) {
+        if (gameHandler.canShoot()) {
             Team ct = gameHandler.getCurrentTurn();
 
             for (Worm worm : worms) {
                 if (worm.getTeam() == ct) {
-                    Vector2f vector = worm.getVector();
+                    Vector2f vector = worm.getLocation();
                     gameHandler.addProjectile(new BasicSquareProjectile(gameHandler, vector.x, vector.y, ct, e.getX() - vector.x, e.getY() - vector.y));
                 }
             }

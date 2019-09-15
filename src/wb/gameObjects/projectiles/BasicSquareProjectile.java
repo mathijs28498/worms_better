@@ -35,10 +35,10 @@ public class BasicSquareProjectile extends Projectile {
         float angle = (float) (Math.atan(yVel / xVel) + Math.toRadians(90));
 
         hitbox.setVectors(
-                Vector2f.addRotated(vector, originalVectors[0], angle),
-                Vector2f.addRotated(vector, originalVectors[1], angle),
-                Vector2f.addRotated(vector, originalVectors[2], angle),
-                Vector2f.addRotated(vector, originalVectors[3], angle)
+                Vector2f.addRotated(location, originalVectors[0], angle),
+                Vector2f.addRotated(location, originalVectors[1], angle),
+                Vector2f.addRotated(location, originalVectors[2], angle),
+                Vector2f.addRotated(location, originalVectors[3], angle)
         );
     }
 
@@ -50,20 +50,23 @@ public class BasicSquareProjectile extends Projectile {
                 PolygonHitbox wormHitbox = w.getHitbox();
                 if (hitbox.collidePolygon(wormHitbox) || wormHitbox.collidePolygon(hitbox)) {
                     w.takeDamage(damage);
+                    gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
                     gameHandler.addToRemove(this);
                 }
             }
         }
 
-        vector.x += xVel;
-        vector.y += yVel;
+        location.x += xVel;
+        location.y += yVel;
 
         calcAngleHitbox();
 
         yVel += 0.3;
 
 
-        if (isOutOfBounds()) gameHandler.addToRemove(this);
+        if (isOutOfBounds()) {
+            gameHandler.addToRemove(this);
+        }
     }
 
     private boolean isOutOfBounds() {

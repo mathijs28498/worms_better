@@ -4,6 +4,7 @@ import wb.gameObjects.GameObject;
 import wb.gameObjects.Ground;
 import wb.gameObjects.TestHitbox;
 import wb.gameObjects.Worm;
+import wb.gameObjects.projectiles.Explosion;
 import wb.gameObjects.projectiles.Projectile;
 import wb.utils.Team;
 
@@ -20,14 +21,17 @@ public class GameHandler {
     private List<Worm> worms;
     private List<Projectile> projectiles;
     private List<GameObject> playGround;
+    private List<Explosion> explosions;
+    private List<GameObject> objectsToRemove;
+
     private BufferedImage background;
     private Team currentTurn;
-    private List<GameObject> objectsToRemove;
 
     public GameHandler() {
         worms = new ArrayList<>();
         projectiles = new ArrayList<>();
         playGround = new ArrayList<>();
+        explosions = new ArrayList<>();
         objectsToRemove = new ArrayList<>();
         currentTurn = Team.ONE;
 
@@ -58,6 +62,9 @@ public class GameHandler {
         for (GameObject go : playGround) {
             go.tick();
         }
+        for (GameObject go : explosions) {
+            go.tick();
+        }
         removeGameObjects();
     }
 
@@ -73,15 +80,22 @@ public class GameHandler {
         for (GameObject go : worms) {
             go.render(g);
         }
+        for (int i = 0; i < explosions.size(); i++) {
+            explosions.get(i).render(g);
+        }
     }
 
     private void removeGameObjects() {
         for (GameObject go: objectsToRemove) {
-            if (!projectiles.remove(go))
+            if (!projectiles.remove(go) && !explosions.remove(go))
                 worms.remove(go);
         }
 
         objectsToRemove = new ArrayList<>();
+    }
+
+    public boolean canShoot() {
+        return projectiles.size() == 0 && explosions.size() == 0;
     }
 
     public void addToRemove(GameObject go) {
@@ -92,12 +106,12 @@ public class GameHandler {
         projectiles.add(go);
     }
 
-    public List<Worm> getWorms() {
-        return worms;
+    public void addExplosion(Explosion go) {
+        explosions.add(go);
     }
 
-    public List<Projectile> getProjectiles() {
-        return projectiles;
+    public List<Worm> getWorms() {
+        return worms;
     }
 
     public void setCurrentTurn(Team currentTurn) {

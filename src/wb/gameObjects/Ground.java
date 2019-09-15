@@ -14,7 +14,7 @@ public class Ground extends GameObject {
         super(gameHandler);
         width = Game.WIDTH;
         height = 100;
-        vector = new Vector2f(0, Game.HEIGHT - height);
+        location = new Vector2f(0, Game.HEIGHT - height);
     }
 
     @Override
@@ -25,6 +25,6 @@ public class Ground extends GameObject {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.GREEN);
-        g.fillRect((int) vector.x,(int) vector.y,width,height);
+        g.fillRect((int) location.x,(int) location.y,width,height);
     }
 }

@@ -16,7 +16,7 @@ public class Worm extends GameObject {
 
     public Worm(GameHandler gameHandler, float x, float y, Team team) {
         super(gameHandler);
-        vector = new Vector2f(x, y);
+        location = new Vector2f(x, y);
         this.team = team;
         width = 25;
         height = 50;
@@ -38,20 +38,20 @@ public class Worm extends GameObject {
     @Override
     public void render(Graphics g) {
         g.setColor(Color.GRAY);
-        g.fillRect((int) (vector.x - 30), (int) (vector.y - height / 2 - 20), 60, 10);
+        g.fillRect((int) (location.x - 30), (int) (location.y - height / 2 - 20), 60, 10);
 
         g.setColor(Color.GREEN);
-        g.fillRect((int) (vector.x - 30), (int) (vector.y - height / 2 - 20), (int) (hp / maxHP * 60), 10);
+        g.fillRect((int) (location.x - 30), (int) (location.y - height / 2 - 20), (int) (hp / maxHP * 60), 10);
         g.setColor(Color.WHITE);
-        g.drawRect((int) (vector.x - 1 - 30), (int) (vector.y - height / 2 - 20), 60, 10);
+        g.drawRect((int) (location.x - 1 - 30), (int) (location.y - height / 2 - 20), 60, 10);
 
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.BLUE);
         g2d.fill(hitbox.getPolygonFromVectors());
 
-        if (gameHandler.getProjectiles().size() == 0 && gameHandler.getCurrentTurn() == team) {
+        if (gameHandler.canShoot() && gameHandler.getCurrentTurn() == team) {
             g.setColor(Color.RED);
-            g.drawLine((int) vector.x, (int) vector.y, xMouse, yMouse);
+            g.drawLine((int) location.x, (int) location.y, xMouse, yMouse);
         }
     }
 

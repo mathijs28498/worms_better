@@ -2,20 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bc271baf-b331-45f0-aef5-3b5905626c8a" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicExplosion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/wb/gameObjects/projectiles/Explosion.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/worms_better/wb/Game.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/GameHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/worms_better/wb/GameHandler.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/GameObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/GameObject.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/Ground.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/Ground.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/Projectile.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/Worm.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/worms_better/wb/gameObjects/Worm.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/worms_better/wb/utils/MouseInput.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/worms_better/wb/utils/MouseInput.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/wb/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/wb/GameHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/GameHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/gameObjects/GameObject.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/Ground.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/gameObjects/Ground.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/Projectile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/TestHitbox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/gameObjects/TestHitbox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/Worm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/gameObjects/Worm.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/wb/gameObjects/projectiles/Projectile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/gameObjects/projectiles/Projectile.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/wb/utils/MouseInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/wb/utils/MouseInput.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -31,22 +32,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wb/Game.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="17" column="65" selection-start-line="17" selection-start-column="65" selection-end-line="17" selection-end-column="65" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/GameObject.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="19" column="44" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
+            <state relative-caret-position="153">
+              <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#597#598#0" expanded="true" />
@@ -57,22 +46,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wb/Window.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="141">
-              <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/Worm.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="51" column="55" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
+            <state relative-caret-position="-323">
+              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#1852#1853#0" expanded="true" />
@@ -89,24 +66,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wb/GameHandler.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="237">
-              <caret line="90" column="20" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#2428#2429#0" expanded="true" />
-                <element signature="e#2462#2463#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/Projectile.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="169">
-              <caret line="14" column="31" lean-forward="true" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+              <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -115,10 +78,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java">
+        <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicExplosion.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="322">
-              <caret line="68" column="37" selection-start-line="68" selection-start-column="37" selection-end-line="68" selection-end-column="37" />
+            <state relative-caret-position="204">
+              <caret line="32" selection-start-line="32" selection-end-line="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -127,23 +90,17 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wb/utils/MouseInput.java">
+        <entry file="file://$PROJECT_DIR$/src/wb/GameHandler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="407">
-              <caret line="45" column="16" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="16" />
+            <state relative-caret-position="345">
+              <caret line="109" column="18" selection-start-line="109" selection-start-column="18" selection-end-line="109" selection-end-column="18" />
               <folding>
-                <element signature="e#1795#1796#0" expanded="true" />
-                <element signature="e#1902#1903#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2321#2322#0" expanded="true" />
+                <element signature="e#2392#2393#0" expanded="true" />
+                <element signature="e#2850#2851#0" expanded="true" />
+                <element signature="e#2876#2877#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/wb/hitboxes/PolygonHitbox.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -156,6 +113,54 @@
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/Explosion.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="119">
+              <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#229#230#0" expanded="true" />
+                <element signature="e#263#264#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="158">
+              <caret line="52" column="97" selection-start-line="52" selection-start-column="97" selection-end-line="52" selection-end-column="97" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/wb/utils/MouseInput.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
+              <folding>
+                <element signature="e#1643#1644#0" expanded="true" />
+                <element signature="e#1750#1751#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/wb/hitboxes/PolygonHitbox.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="17">
+              <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -178,7 +183,11 @@
       <find>x -</find>
       <find>syste</find>
       <find>system.ou</find>
+      <find>width</find>
     </findStrings>
+    <replaceStrings>
+      <replace>height</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -204,12 +213,14 @@
         <option value="$PROJECT_DIR$/src/wb/hitboxes/Vector2f.java" />
         <option value="$PROJECT_DIR$/src/wb/hitboxes/PolygonHitbox.java" />
         <option value="$PROJECT_DIR$/src/wb/gameObjects/projectiles/Projectile.java" />
-        <option value="$PROJECT_DIR$/src/wb/gameObjects/GameObject.java" />
         <option value="$PROJECT_DIR$/src/wb/Game.java" />
-        <option value="$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java" />
-        <option value="$PROJECT_DIR$/src/wb/GameHandler.java" />
-        <option value="$PROJECT_DIR$/src/wb/utils/MouseInput.java" />
+        <option value="$PROJECT_DIR$/src/wb/gameObjects/projectiles/Explosion.java" />
+        <option value="$PROJECT_DIR$/src/wb/gameObjects/GameObject.java" />
         <option value="$PROJECT_DIR$/src/wb/gameObjects/Worm.java" />
+        <option value="$PROJECT_DIR$/src/wb/utils/MouseInput.java" />
+        <option value="$PROJECT_DIR$/src/wb/GameHandler.java" />
+        <option value="$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicExplosion.java" />
+        <option value="$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java" />
       </list>
     </option>
   </component>
@@ -333,9 +344,8 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20628998" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20628998" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -344,7 +354,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.43336946" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.43336946" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39869988" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -446,53 +456,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/wb/hitboxes/PolygonHitbox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/TestHitbox.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="42" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/wb/Window.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="141">
           <caret line="10" column="14" selection-start-line="10" selection-start-column="14" selection-end-line="10" selection-end-column="14" />
           <folding>
             <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/GameObject.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="19" column="44" selection-start-line="19" selection-start-column="44" selection-end-line="19" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#597#598#0" expanded="true" />
-            <element signature="e#625#626#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/wb/GameHandler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="237">
-          <caret line="90" column="20" selection-start-line="90" selection-start-column="20" selection-end-line="90" selection-end-column="20" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2428#2429#0" expanded="true" />
-            <element signature="e#2462#2463#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -507,23 +476,68 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/wb/hitboxes/PolygonHitbox.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="12" column="19" selection-start-line="12" selection-start-column="19" selection-end-line="12" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/wb/utils/MouseInput.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="45" column="16" selection-start-line="45" selection-start-column="16" selection-end-line="45" selection-end-column="16" />
+        <state relative-caret-position="153">
+          <caret line="30" column="34" selection-start-line="30" selection-start-column="34" selection-end-line="30" selection-end-column="34" />
           <folding>
-            <element signature="e#1795#1796#0" expanded="true" />
-            <element signature="e#1902#1903#0" expanded="true" />
+            <element signature="e#1643#1644#0" expanded="true" />
+            <element signature="e#1750#1751#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java">
+    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/TestHitbox.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="68" column="37" selection-start-line="68" selection-start-column="37" selection-end-line="68" selection-end-column="37" />
+        <state relative-caret-position="408">
+          <caret line="24" column="42" selection-start-line="24" selection-start-column="35" selection-end-line="24" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/GameObject.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#597#598#0" expanded="true" />
+            <element signature="e#625#626#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/wb/GameHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="109" column="18" selection-start-line="109" selection-start-column="18" selection-end-line="109" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2321#2322#0" expanded="true" />
+            <element signature="e#2392#2393#0" expanded="true" />
+            <element signature="e#2850#2851#0" expanded="true" />
+            <element signature="e#2876#2877#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/Explosion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#229#230#0" expanded="true" />
+            <element signature="e#263#264#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -531,7 +545,7 @@
     <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/Projectile.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="169">
-          <caret line="14" column="31" lean-forward="true" selection-start-line="14" selection-start-column="31" selection-end-line="14" selection-end-column="31" />
+          <caret line="10" column="31" lean-forward="true" selection-start-line="10" selection-start-column="31" selection-end-line="10" selection-end-column="31" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -540,8 +554,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/Worm.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="51" column="55" selection-start-line="51" selection-start-column="55" selection-end-line="51" selection-end-column="55" />
+        <state relative-caret-position="-323">
+          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#1852#1853#0" expanded="true" />
@@ -552,6 +566,26 @@
             <element signature="e#2035#2036#0" expanded="true" />
             <element signature="e#2064#2065#0" expanded="true" />
             <element signature="e#2091#2092#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicExplosion.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="32" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/wb/gameObjects/projectiles/BasicSquareProjectile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="52" column="97" selection-start-line="52" selection-start-column="97" selection-end-line="52" selection-end-column="97" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

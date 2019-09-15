@@ -7,7 +7,7 @@ import java.awt.*;
 
 public abstract class GameObject {
 
-    protected Vector2f vector;
+    protected Vector2f location;
     protected int width, height;
     protected GameHandler gameHandler;
 
@@ -19,8 +19,8 @@ public abstract class GameObject {
 
     public abstract void render(Graphics g);
 
-    public Vector2f getVector() {
-        return vector;
+    public Vector2f getLocation() {
+        return location;
     }
 
     public int getWidth() {

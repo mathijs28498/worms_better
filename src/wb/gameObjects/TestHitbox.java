@@ -13,7 +13,7 @@ public class TestHitbox extends GameObject {
 
     public TestHitbox(GameHandler gameHandler, float x, float y) {
         super(gameHandler);
-        vector = new Vector2f(x, y);
+        location = new Vector2f(x, y);
 
         Vector2f[] vectors = new Vector2f[] {
                 new Vector2f(x, y),
