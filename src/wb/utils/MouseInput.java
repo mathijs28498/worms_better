@@ -1,10 +1,11 @@
 package wb.utils;
 
-import wb.Game;
 import wb.GameHandler;
-import wb.gameObjects.GameObject;
-import wb.gameObjects.Projectile;
+import wb.gameObjects.TestHitbox;
+import wb.gameObjects.projectiles.BasicSquareProjectile;
 import wb.gameObjects.Worm;
+import wb.gameObjects.projectiles.Projectile;
+import wb.hitboxes.Vector2f;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -16,12 +17,12 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     private GameHandler gameHandler;
     private List<Worm> worms;
-    private Random r;
+    private List<Projectile> projectiles;
 
     public MouseInput(GameHandler gameHandler) {
         this.gameHandler = gameHandler;
         worms = gameHandler.getWorms();
-        r = new Random();
+        projectiles = gameHandler.getProjectiles();
     }
 
     @Override
@@ -31,20 +32,21 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
 
-        Team ct = gameHandler.getCurrentTurn();
+        if (projectiles.size() == 0) {
+            Team ct = gameHandler.getCurrentTurn();
 
-        for (Worm worm : worms) {
-            if (worm.getTeam() == ct) {
-                int x = worm.getCenterX();
-                int y = worm.getCenterY();
-                gameHandler.addProjectile(new Projectile(x, y, ct, r.nextInt(15) + 5, e.getX() - x, e.getY() - y));
+            for (Worm worm : worms) {
+                if (worm.getTeam() == ct) {
+                    Vector2f vector = worm.getVector();
+                    gameHandler.addProjectile(new BasicSquareProjectile(gameHandler, vector.x, vector.y, ct, e.getX() - vector.x, e.getY() - vector.y));
+                }
             }
-        }
 
-        if (ct == Team.ONE)
-            gameHandler.setCurrentTurn(Team.TWO);
-        else
-            gameHandler.setCurrentTurn(Team.ONE);
+            if (ct == Team.ONE)
+                gameHandler.setCurrentTurn(Team.TWO);
+            else
+                gameHandler.setCurrentTurn(Team.ONE);
+        }
 
     }
 

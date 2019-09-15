@@ -2,7 +2,9 @@ package wb;
 
 import wb.gameObjects.GameObject;
 import wb.gameObjects.Ground;
+import wb.gameObjects.TestHitbox;
 import wb.gameObjects.Worm;
+import wb.gameObjects.projectiles.Projectile;
 import wb.utils.Team;
 
 import javax.imageio.ImageIO;
@@ -16,15 +18,17 @@ import java.util.List;
 public class GameHandler {
 
     private List<Worm> worms;
-    private List<GameObject> projectiles;
+    private List<Projectile> projectiles;
     private List<GameObject> playGround;
     private BufferedImage background;
     private Team currentTurn;
+    private List<GameObject> objectsToRemove;
 
     public GameHandler() {
         worms = new ArrayList<>();
         projectiles = new ArrayList<>();
         playGround = new ArrayList<>();
+        objectsToRemove = new ArrayList<>();
         currentTurn = Team.ONE;
 
         try {
@@ -34,15 +38,13 @@ public class GameHandler {
         }
 
         addInitGameObjects();
-
-
     }
 
     private void addInitGameObjects() {
-        playGround.add(new Ground());
+        playGround.add(new Ground(this));
 
-        worms.add(new Worm(50, Game.HEIGHT - 200, Team.ONE, this));
-        worms.add(new Worm(Game.WIDTH - 100, Game.HEIGHT - 200, Team.TWO, this));
+        worms.add(new Worm(this, 50, Game.HEIGHT - 125, Team.ONE));
+        worms.add(new Worm(this, Game.WIDTH - 100, Game.HEIGHT - 125, Team.TWO));
     }
 
 
@@ -56,6 +58,7 @@ public class GameHandler {
         for (GameObject go : playGround) {
             go.tick();
         }
+        removeGameObjects();
     }
 
     public void render(Graphics g) {
@@ -72,12 +75,29 @@ public class GameHandler {
         }
     }
 
-    public void addProjectile(GameObject go) {
+    private void removeGameObjects() {
+        for (GameObject go: objectsToRemove) {
+            if (!projectiles.remove(go))
+                worms.remove(go);
+        }
+
+        objectsToRemove = new ArrayList<>();
+    }
+
+    public void addToRemove(GameObject go) {
+        objectsToRemove.add(go);
+    }
+
+    public void addProjectile(Projectile go) {
         projectiles.add(go);
     }
 
     public List<Worm> getWorms() {
         return worms;
+    }
+
+    public List<Projectile> getProjectiles() {
+        return projectiles;
     }
 
     public void setCurrentTurn(Team currentTurn) {

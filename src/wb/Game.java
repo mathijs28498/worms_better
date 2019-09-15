@@ -1,5 +1,7 @@
 package wb;
 
+import wb.hitboxes.PolygonHitbox;
+import wb.hitboxes.Vector2f;
 import wb.utils.KeyInput;
 import wb.utils.MouseInput;
 import wb.utils.Team;
@@ -19,6 +21,7 @@ public class Game extends Canvas implements Runnable {
     private GameHandler gameHandler;
 
     private boolean running;
+
 
     private Game() {
         gameHandler = new GameHandler();

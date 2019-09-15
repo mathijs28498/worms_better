@@ -1,6 +1,8 @@
 package wb.gameObjects;
 
 import wb.GameHandler;
+import wb.hitboxes.PolygonHitbox;
+import wb.hitboxes.Vector2f;
 import wb.utils.Team;
 
 import java.awt.*;
@@ -8,46 +10,60 @@ import java.awt.*;
 public class Worm extends GameObject {
 
     private Team team;
-    private GameHandler gameHandler;
     private int xMouse, yMouse, maxHP;
-    private double hp;
+    private float hp;
+    private PolygonHitbox hitbox;
 
-    public Worm(int x, int y, Team team, GameHandler gameHandler) {
-        this.x = x;
-        this.y = y;
+    public Worm(GameHandler gameHandler, float x, float y, Team team) {
+        super(gameHandler);
+        vector = new Vector2f(x, y);
         this.team = team;
-        this.gameHandler = gameHandler;
-        width = 50;
-        height = 100;
+        width = 25;
+        height = 50;
         maxHP = 100;
         hp = maxHP;
+        hitbox = new PolygonHitbox(
+                new Vector2f(x - width / 2f, y - height / 2f),
+                new Vector2f(x + width / 2f, y - height / 2f),
+                new Vector2f(x + width / 2f, y + height / 2f),
+                new Vector2f(x - width / 2f, y + height / 2f)
+        );
     }
 
     @Override
     public void tick() {
-        hp -= 0.1;
+//        hp -= 0.1;
     }
 
     @Override
     public void render(Graphics g) {
         g.setColor(Color.GRAY);
-        g.fillRect(x + width /2 - 50, y - 30, 100, 10);
+        g.fillRect((int) (vector.x - 30), (int) (vector.y - height / 2 - 20), 60, 10);
 
         g.setColor(Color.GREEN);
-        g.fillRect(x + width /2 - 50, y - 30, (int) (hp / maxHP * 100), 10);
-
+        g.fillRect((int) (vector.x - 30), (int) (vector.y - height / 2 - 20), (int) (hp / maxHP * 60), 10);
         g.setColor(Color.WHITE);
-        g.drawRect(x - 1 + width /2 - 50, y - 30, 100, 10);
+        g.drawRect((int) (vector.x - 1 - 30), (int) (vector.y - height / 2 - 20), 60, 10);
 
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setColor(Color.BLUE);
+        g2d.fill(hitbox.getPolygonFromVectors());
 
-        g.setColor(Color.BLUE);
-        g.fillRect(x,y,width,height);
-
-        if (gameHandler.getCurrentTurn()
-                == team) {
+        if (gameHandler.getProjectiles().size() == 0 && gameHandler.getCurrentTurn() == team) {
             g.setColor(Color.RED);
-            g.drawLine(getCenterX(), getCenterY(), xMouse, yMouse);
+            g.drawLine((int) vector.x, (int) vector.y, xMouse, yMouse);
         }
+    }
+
+    public void takeDamage(int damage) {
+        hp -= damage;
+        if (hp <= 0) {
+            gameHandler.addToRemove(this);
+        }
+    }
+
+    public PolygonHitbox getHitbox() {
+        return hitbox;
     }
 
     public void setxMouse(int xMouse) {

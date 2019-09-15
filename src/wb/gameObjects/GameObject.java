@@ -1,29 +1,26 @@
 package wb.gameObjects;
 
+import wb.GameHandler;
+import wb.hitboxes.Vector2f;
+
 import java.awt.*;
 
 public abstract class GameObject {
 
-    protected int x, y, width, height;
+    protected Vector2f vector;
+    protected int width, height;
+    protected GameHandler gameHandler;
+
+    public GameObject(GameHandler gameHandler) {
+        this.gameHandler = gameHandler;
+    }
 
     public abstract void tick();
 
     public abstract void render(Graphics g);
 
-    public int getCenterX() {
-        return x + width / 2;
-    }
-
-    public int getCenterY() {
-        return y + height / 2;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public Vector2f getVector() {
+        return vector;
     }
 
     public int getWidth() {
