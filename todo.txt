@@ -1,0 +1,7 @@
+[ ] - Gravity worms
+[ ] - More projectiles
+[ ] - Menu
+[ ] - Worm sprites
+[ ] - Improve projectile sprite placement
+[ ] - Screenshake
+[ ] - Manual power projectile
