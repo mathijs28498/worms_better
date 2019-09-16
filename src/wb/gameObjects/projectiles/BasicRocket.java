@@ -2,21 +2,27 @@ package wb.gameObjects.projectiles;
 
 import wb.Game;
 import wb.GameHandler;
+import wb.gameObjects.GameObject;
+import wb.gameObjects.Ground;
 import wb.gameObjects.Worm;
 import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
+import wb.utils.Images;
 import wb.utils.Team;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class BasicSquareProjectile extends Projectile {
+public class BasicRocket extends Projectile {
 
     private PolygonHitbox hitbox;
     private Vector2f[] originalVectors;
     private int damage;
 
-    public BasicSquareProjectile(GameHandler gameHandler, float x, float y, Team team, float xDiff, float yDiff) {
+    public BasicRocket(GameHandler gameHandler, float x, float y, Team team, float xDiff, float yDiff) {
         super(gameHandler, x , y, team, 20, xDiff, yDiff);
         damage = 20;
         width = 10;
@@ -29,6 +35,8 @@ public class BasicSquareProjectile extends Projectile {
         };
         hitbox = new PolygonHitbox();
         calcAngleHitbox();
+
+        xVel += gameHandler.getWind();
     }
 
     private void calcAngleHitbox() {
@@ -44,17 +52,8 @@ public class BasicSquareProjectile extends Projectile {
 
     @Override
     public void tick() {
-        List<Worm> worms = gameHandler.getWorms();
-        for (Worm w : worms) {
-            if (w.getTeam() != team) {
-                PolygonHitbox wormHitbox = w.getHitbox();
-                if (hitbox.collidePolygon(wormHitbox) || wormHitbox.collidePolygon(hitbox)) {
-                    w.takeDamage(damage);
-                    gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
-                    gameHandler.addToRemove(this);
-                }
-            }
-        }
+        checkCollisionPlayer();
+        checkCollisionGround();
 
         location.x += xVel;
         location.y += yVel;
@@ -66,6 +65,33 @@ public class BasicSquareProjectile extends Projectile {
 
         if (isOutOfBounds()) {
             gameHandler.addToRemove(this);
+        }
+    }
+
+    private void checkCollisionPlayer() {
+        List<Worm> worms = gameHandler.getWorms();
+        for (Worm w : worms) {
+            if (w.getTeam() != team) {
+                PolygonHitbox wormHitbox = w.getHitbox();
+                if (hitbox.collidePolygon(wormHitbox) || wormHitbox.collidePolygon(hitbox)) {
+                    w.takeDamage(damage);
+                    gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
+                    gameHandler.addToRemove(this);
+                }
+            }
+        }
+    }
+
+    private void checkCollisionGround() {
+        List<Ground> playGround = gameHandler.getPlayGround();
+
+        for (Ground g : playGround) {
+            PolygonHitbox groundHitbox = g.getHitbox();
+            if (hitbox.collidePolygon(groundHitbox) || groundHitbox.collidePolygon(hitbox)) {
+                gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
+                gameHandler.addToRemove(this);
+                g.hit(damage, (int) location.x);
+            }
         }
     }
 
@@ -82,15 +108,21 @@ public class BasicSquareProjectile extends Projectile {
     @Override
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.PINK);
-        g2d.fill(hitbox.getPolygonFromVectors());
+//        g2d.setColor(Color.PINK);
+//        g2d.fill(hitbox.getPolygonFromVectors());
 
-//            old rotating code
-//        g2d.rotate(Math.atan(yVel / xVel), x, y);
-//
-//        g2d.setColor(Color.ORANGE);
-//        g2d.fill(new Rectangle((int) x, (int) y,width,height));
-//
-//        g2d.dispose();
+
+        float angle = 0;
+        if (xVel > 0)
+            angle = (float) (Math.atan(yVel / xVel) + Math.toRadians(90));
+        else if (xVel < 0)
+            angle = (float) (Math.atan(yVel / xVel) + Math.toRadians(270));
+
+        BufferedImage image = Images.basicRocket;
+        AffineTransform tx = AffineTransform.getRotateInstance(angle, image.getWidth() / 2, image.getHeight() / 2);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+
+            // Drawing the rotated image at the required drawing locations
+        g2d.drawImage(op.filter(image, null), (int) location.x - image.getWidth(), (int) location.y - image.getHeight(), null);
     }
 }

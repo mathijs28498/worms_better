@@ -2,30 +2,42 @@ package wb;
 
 import wb.gameObjects.GameObject;
 import wb.gameObjects.Ground;
-import wb.gameObjects.TestHitbox;
 import wb.gameObjects.Worm;
+import wb.gameObjects.projectiles.BasicRocket;
 import wb.gameObjects.projectiles.Explosion;
 import wb.gameObjects.projectiles.Projectile;
+import wb.hitboxes.Vector2f;
+import wb.hud.HUD;
+import wb.utils.Images;
 import wb.utils.Team;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class GameHandler {
 
     private List<Worm> worms;
     private List<Projectile> projectiles;
-    private List<GameObject> playGround;
+    private List<Ground> playGround;
     private List<Explosion> explosions;
     private List<GameObject> objectsToRemove;
 
-    private BufferedImage background;
+    private int wind;
+    private Random r;
+
     private Team currentTurn;
+    private int turnCounter;
+
+    private boolean gameWon;
+    private int teamOneCounter, teamTwoCounter;
+    private Team winner;
+
+    private HUD hud;
+
+    private String winningString;
+    private int fps;
 
     public GameHandler() {
         worms = new ArrayList<>();
@@ -34,21 +46,24 @@ public class GameHandler {
         explosions = new ArrayList<>();
         objectsToRemove = new ArrayList<>();
         currentTurn = Team.ONE;
+        r = new Random();
+        turnCounter = 0;
 
-        try {
-            background = ImageIO.read(new File("res/background.jpg"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        hud = new HUD(this);
 
         addInitGameObjects();
+        Images.loadImages();
+
+        wind = r.nextInt(7) - 3;
     }
 
     private void addInitGameObjects() {
-        playGround.add(new Ground(this));
+        for (int i = 0; i < 10; i++) {
+            playGround.add(new Ground(this, i));
+        }
 
-        worms.add(new Worm(this, 50, Game.HEIGHT - 125, Team.ONE));
-        worms.add(new Worm(this, Game.WIDTH - 100, Game.HEIGHT - 125, Team.TWO));
+        worms.add(new Worm(this, 54, Game.HEIGHT - 125, Team.ONE));
+        worms.add(new Worm(this, Game.WIDTH - 54, Game.HEIGHT - 125, Team.TWO));
     }
 
 
@@ -65,11 +80,14 @@ public class GameHandler {
         for (GameObject go : explosions) {
             go.tick();
         }
-        removeGameObjects();
+
+        if (!gameWon) {
+            removeGameObjects();
+        }
     }
 
     public void render(Graphics g) {
-        g.drawImage(background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
+        g.drawImage(Images.background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 
         for (int i = 0; i < projectiles.size(); i++) {
             projectiles.get(i).render(g);
@@ -83,19 +101,109 @@ public class GameHandler {
         for (int i = 0; i < explosions.size(); i++) {
             explosions.get(i).render(g);
         }
+
+        hud.render(g);
     }
 
     private void removeGameObjects() {
         for (GameObject go: objectsToRemove) {
-            if (!projectiles.remove(go) && !explosions.remove(go))
+            if (go instanceof Projectile)
+                projectiles.remove(go);
+            else if (go instanceof Explosion)
+                explosions.remove(go);
+            else if (go instanceof Worm) {
                 worms.remove(go);
+                subtractFromWormCounter(((Worm) go).getTeam());
+            }
         }
 
-        objectsToRemove = new ArrayList<>();
+        checkGameWon();
+    }
+
+    private void checkGameWon() {
+        if (teamOneCounter == 0 || teamTwoCounter == 0) {
+            gameWon = true;
+            if (teamOneCounter == 0) winner = Team.TWO;
+            else winner = Team.ONE;
+
+            if (turnCounter < 200) winningString = "WINNER!!!!";
+            else if (turnCounter < 250) winningString = "TOOK YOU LONG ENOUGH";
+            else winningString = "FINALLY...";
+        }
+    }
+
+    public void shoot(int x, int y) {
+        for (Worm worm : worms) {
+            if (worm.getTeam() == currentTurn) {
+                Vector2f vector = worm.getLocation();
+                addProjectile(new BasicRocket(this, vector.x, vector.y, currentTurn, x - vector.x, y - vector.y));
+            }
+        }
+
+        if (currentTurn == Team.ONE)
+            currentTurn = Team.TWO;
+        else
+            currentTurn = Team.ONE;
+
+        wind = r.nextInt(7) - 3;
+        turnCounter++;
     }
 
     public boolean canShoot() {
-        return projectiles.size() == 0 && explosions.size() == 0;
+        return !gameWon && projectiles.size() == 0 && explosions.size() == 0;
+    }
+
+    public float getWind() {
+        return wind;
+    }
+
+    public Team getWinner() {
+        return winner;
+    }
+
+    public String getWinningString() {
+        return winningString;
+    }
+
+    public void subtractFromWormCounter(Team team) {
+        switch (team) {
+            case ONE:
+                teamOneCounter--;
+                break;
+            case TWO:
+                teamTwoCounter--;
+                break;
+        }
+    }
+
+    public void addToWormCounter(Team team) {
+        switch (team) {
+            case ONE:
+                teamOneCounter++;
+                break;
+            case TWO:
+                teamTwoCounter++;
+                break;
+        }
+    }
+
+    public void reset() {
+        gameWon = false;
+
+        worms = new ArrayList<>();
+        projectiles = new ArrayList<>();
+        playGround = new ArrayList<>();
+        explosions = new ArrayList<>();
+        objectsToRemove = new ArrayList<>();
+        currentTurn = Team.ONE;
+        turnCounter = 0;
+
+        teamOneCounter = 0;
+        teamTwoCounter = 0;
+
+        addInitGameObjects();
+
+        wind = r.nextInt(7) - 3;
     }
 
     public void addToRemove(GameObject go) {
@@ -110,8 +218,24 @@ public class GameHandler {
         explosions.add(go);
     }
 
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    public void setFps(int fps) {
+        this.fps = fps;
+    }
+
+    public int getFps() {
+        return fps;
+    }
+
     public List<Worm> getWorms() {
         return worms;
+    }
+
+    public List<Ground> getPlayGround() {
+        return playGround;
     }
 
     public void setCurrentTurn(Team currentTurn) {

@@ -1,17 +1,10 @@
 package wb;
 
-import wb.hitboxes.PolygonHitbox;
-import wb.hitboxes.Vector2f;
 import wb.utils.KeyInput;
 import wb.utils.MouseInput;
-import wb.utils.Team;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Game extends Canvas implements Runnable {
 
@@ -19,6 +12,7 @@ public class Game extends Canvas implements Runnable {
 
     private Thread mainThread;
     private GameHandler gameHandler;
+    private MouseInput mouseInput;
 
     private boolean running;
 
@@ -33,8 +27,8 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void initCanvas() {
-        addKeyListener(new KeyInput());
-        MouseInput mouseInput = new MouseInput(gameHandler);
+        addKeyListener(new KeyInput(gameHandler));
+        mouseInput = new MouseInput(gameHandler);
         addMouseListener(mouseInput);
         addMouseMotionListener(mouseInput);
 
@@ -103,7 +97,8 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                System.out.println("FPS: " + frames + " TICKS: " + updates);
+//                System.out.println("FPS: " + frames + " TICKS: " + updates);
+                gameHandler.setFps(frames);
                 frames = 0;
                 updates = 0;
             }

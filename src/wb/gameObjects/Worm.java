@@ -28,6 +28,8 @@ public class Worm extends GameObject {
                 new Vector2f(x + width / 2f, y + height / 2f),
                 new Vector2f(x - width / 2f, y + height / 2f)
         );
+
+        gameHandler.addToWormCounter(team);
     }
 
     @Override
@@ -46,7 +48,9 @@ public class Worm extends GameObject {
         g.drawRect((int) (location.x - 1 - 30), (int) (location.y - height / 2 - 20), 60, 10);
 
         Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.BLUE);
+
+        if (team == Team.ONE) g2d.setColor(Color.BLUE);
+        else g2d.setColor(Color.ORANGE);
         g2d.fill(hitbox.getPolygonFromVectors());
 
         if (gameHandler.canShoot() && gameHandler.getCurrentTurn() == team) {
