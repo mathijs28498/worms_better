@@ -9,12 +9,14 @@ public class Images {
 
     public static BufferedImage background;
     public static BufferedImage basicRocket;
+    public static BufferedImage cursor;
 
     public static void loadImages() {
 
         try {
             background = ImageIO.read(new File("res/background.jpg"));
             basicRocket = ImageIO.read(new File("res/basicRocket.png"));
+            cursor = ImageIO.read(new File("res/cursor.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

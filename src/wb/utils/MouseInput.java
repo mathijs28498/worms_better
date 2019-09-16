@@ -13,6 +13,7 @@ import java.util.List;
 public class MouseInput implements MouseListener, MouseMotionListener {
 
     private GameHandler gameHandler;
+    private int offset = 16;
 
     public MouseInput(GameHandler gameHandler) {
         this.gameHandler = gameHandler;
@@ -26,7 +27,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
 
         if (gameHandler.canShoot()) {
-            gameHandler.shoot(e.getX(), e.getY());
+            gameHandler.shoot(e.getX() + offset, e.getY() + offset);
         }
 
     }
@@ -58,8 +59,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
 
     private void mouseMovement(int x, int y) {
         for (Worm worm : gameHandler.getWorms()) {
-            worm.setxMouse(x);
-            worm.setyMouse(y);
+            worm.setMouse(x + offset, y + offset);
         }
     }
 }

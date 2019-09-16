@@ -95,10 +95,6 @@ public class Ground extends GameObject {
         g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
     }
 
-    public int getLeftY() {
-        return leftY;
-    }
-
     public void addLeftY(int yDiff) {
         leftY += yDiff;
         if (leftY > maxY) leftY = maxY;

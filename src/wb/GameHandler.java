@@ -52,7 +52,6 @@ public class GameHandler {
         hud = new HUD(this);
 
         addInitGameObjects();
-        Images.loadImages();
 
         wind = r.nextInt(7) - 3;
     }
@@ -136,7 +135,8 @@ public class GameHandler {
         for (Worm worm : worms) {
             if (worm.getTeam() == currentTurn) {
                 Vector2f vector = worm.getLocation();
-                addProjectile(new BasicRocket(this, vector.x, vector.y, currentTurn, x - vector.x, y - vector.y));
+                float power = worm.getPower() / worm.getMaxPower();
+                addProjectile(new BasicRocket(this, vector.x, vector.y, currentTurn, power,x - vector.x, y - vector.y));
             }
         }
 

@@ -4,4 +4,4 @@
 [ ] - Worm sprites
 [ ] - Improve projectile sprite placement
 [ ] - Screenshake
-[ ] - Manual power projectile
+[X] - Manual power projectile

@@ -21,8 +21,8 @@ public class BasicRocket extends Projectile {
 
     private Vector2f[] originalVectors;
 
-    public BasicRocket(GameHandler gameHandler, float x, float y, Team team, float xDiff, float yDiff) {
-        super(gameHandler, x , y, team, 20, xDiff, yDiff);
+    public BasicRocket(GameHandler gameHandler, float x, float y, Team team, float power, float xDiff, float yDiff) {
+        super(gameHandler, x , y, team, (int) (5 + (20 * power)), xDiff, yDiff);
         damage = 20;
         terrainDamage = 20;
         width = 10;
@@ -109,7 +109,7 @@ public class BasicRocket extends Projectile {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 //        g2d.setColor(Color.PINK);
-//        g2d.fill(hitbox.getPolygonFromVectors());
+//        g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
 
 
         float angle = 0;

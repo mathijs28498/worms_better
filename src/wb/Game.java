@@ -1,5 +1,6 @@
 package wb;
 
+import wb.utils.Images;
 import wb.utils.KeyInput;
 import wb.utils.MouseInput;
 
@@ -18,6 +19,7 @@ public class Game extends Canvas implements Runnable {
 
 
     private Game() {
+        Images.loadImages();
         gameHandler = new GameHandler();
         new Window(this, WIDTH, HEIGHT);
 
