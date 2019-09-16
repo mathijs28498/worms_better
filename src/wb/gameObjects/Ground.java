@@ -2,6 +2,7 @@ package wb.gameObjects;
 
 import wb.Game;
 import wb.GameHandler;
+import wb.hitboxes.Hitbox;
 import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
 
@@ -10,7 +11,6 @@ import java.util.Random;
 
 public class Ground extends GameObject {
 
-    private PolygonHitbox hitbox;
     private int leftX, rightX, leftY, rightY, pos;
     private static int maxY = Game.HEIGHT - 50;
 
@@ -92,11 +92,7 @@ public class Ground extends GameObject {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.GREEN);
-        g2d.fill(hitbox.getPolygonFromVectors());
-    }
-
-    public PolygonHitbox getHitbox() {
-        return hitbox;
+        g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
     }
 
     public int getLeftY() {

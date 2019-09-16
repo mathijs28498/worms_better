@@ -9,6 +9,7 @@ public abstract class Projectile extends GameObject {
 
     protected Team team;
     protected float xVel, yVel;
+    protected int damage, terrainDamage;
 
     public Projectile(GameHandler gameHandler, float x, float y, Team team, int vel, float xDiff, float yDiff) {
         super(gameHandler);

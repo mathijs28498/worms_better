@@ -2,9 +2,10 @@ package wb.gameObjects.projectiles;
 
 import wb.Game;
 import wb.GameHandler;
-import wb.gameObjects.GameObject;
 import wb.gameObjects.Ground;
 import wb.gameObjects.Worm;
+import wb.gameObjects.explosions.BasicExplosion;
+import wb.hitboxes.Hitbox;
 import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
 import wb.utils.Images;
@@ -18,13 +19,12 @@ import java.util.List;
 
 public class BasicRocket extends Projectile {
 
-    private PolygonHitbox hitbox;
     private Vector2f[] originalVectors;
-    private int damage;
 
     public BasicRocket(GameHandler gameHandler, float x, float y, Team team, float xDiff, float yDiff) {
         super(gameHandler, x , y, team, 20, xDiff, yDiff);
         damage = 20;
+        terrainDamage = 20;
         width = 10;
         height = 20;
         originalVectors = new Vector2f[]{
@@ -42,7 +42,7 @@ public class BasicRocket extends Projectile {
     private void calcAngleHitbox() {
         float angle = (float) (Math.atan(yVel / xVel) + Math.toRadians(90));
 
-        hitbox.setVectors(
+        ((PolygonHitbox) hitbox).setVectors(
                 Vector2f.addRotated(location, originalVectors[0], angle),
                 Vector2f.addRotated(location, originalVectors[1], angle),
                 Vector2f.addRotated(location, originalVectors[2], angle),
@@ -72,8 +72,8 @@ public class BasicRocket extends Projectile {
         List<Worm> worms = gameHandler.getWorms();
         for (Worm w : worms) {
             if (w.getTeam() != team) {
-                PolygonHitbox wormHitbox = w.getHitbox();
-                if (hitbox.collidePolygon(wormHitbox) || wormHitbox.collidePolygon(hitbox)) {
+                Hitbox wormHitbox = w.getHitbox();
+                if (hitbox.collide(wormHitbox) || wormHitbox.collide(hitbox)) {
                     w.takeDamage(damage);
                     gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
                     gameHandler.addToRemove(this);
@@ -86,17 +86,17 @@ public class BasicRocket extends Projectile {
         List<Ground> playGround = gameHandler.getPlayGround();
 
         for (Ground g : playGround) {
-            PolygonHitbox groundHitbox = g.getHitbox();
-            if (hitbox.collidePolygon(groundHitbox) || groundHitbox.collidePolygon(hitbox)) {
+            Hitbox groundHitbox = g.getHitbox();
+            if (hitbox.collide(groundHitbox) || groundHitbox.collide(hitbox)) {
                 gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
                 gameHandler.addToRemove(this);
-                g.hit(damage, (int) location.x);
+                g.hit(terrainDamage, (int) location.x);
             }
         }
     }
 
     private boolean isOutOfBounds() {
-        for (Vector2f v : hitbox.getVectors()) {
+        for (Vector2f v : ((PolygonHitbox) hitbox).getVectors()) {
             if (v.x > 0 && v.x < Game.WIDTH && v.x > 0 && v.y < Game.HEIGHT) {
                 return false;
             }

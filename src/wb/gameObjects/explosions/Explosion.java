@@ -1,4 +1,4 @@
-package wb.gameObjects.projectiles;
+package wb.gameObjects.explosions;
 
 import wb.GameHandler;
 import wb.gameObjects.GameObject;

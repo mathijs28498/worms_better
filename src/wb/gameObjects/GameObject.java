@@ -1,6 +1,7 @@
 package wb.gameObjects;
 
 import wb.GameHandler;
+import wb.hitboxes.Hitbox;
 import wb.hitboxes.Vector2f;
 
 import java.awt.*;
@@ -10,6 +11,7 @@ public abstract class GameObject {
     protected Vector2f location;
     protected int width, height;
     protected GameHandler gameHandler;
+    protected Hitbox hitbox;
 
     public GameObject(GameHandler gameHandler) {
         this.gameHandler = gameHandler;
@@ -21,6 +23,10 @@ public abstract class GameObject {
 
     public Vector2f getLocation() {
         return location;
+    }
+
+    public Hitbox getHitbox() {
+        return hitbox;
     }
 
     public int getWidth() {

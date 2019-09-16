@@ -8,7 +8,6 @@ import java.awt.*;
 
 public class TestHitbox extends GameObject {
 
-    private PolygonHitbox hitbox;
     private boolean collided = false;
 
     public TestHitbox(GameHandler gameHandler, float x, float y) {
@@ -34,10 +33,6 @@ public class TestHitbox extends GameObject {
         this.collided = collided;
     }
 
-    public PolygonHitbox getHitbox() {
-        return hitbox;
-    }
-
     @Override
     public void render(Graphics g) {
         if (!collided)
@@ -46,7 +41,7 @@ public class TestHitbox extends GameObject {
             g.setColor(Color.RED);
 
         Polygon polygon = new Polygon();
-        for (Vector2f v : hitbox.getVectors()) {
+        for (Vector2f v : ((PolygonHitbox) hitbox).getVectors()) {
             polygon.addPoint((int) v.x, (int) v.y);
         }
 

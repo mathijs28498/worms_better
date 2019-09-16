@@ -1,7 +1,6 @@
-package wb.gameObjects.projectiles;
+package wb.gameObjects.explosions;
 
 import wb.GameHandler;
-import wb.gameObjects.Worm;
 import wb.hitboxes.Vector2f;
 
 import java.awt.*;

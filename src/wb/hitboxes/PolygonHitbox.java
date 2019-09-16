@@ -2,7 +2,7 @@ package wb.hitboxes;
 
 import java.awt.*;
 
-public class PolygonHitbox {
+public class PolygonHitbox implements Hitbox {
 
     private Vector2f[] vectors;
 
@@ -10,7 +10,7 @@ public class PolygonHitbox {
         this.vectors = vectors;
     }
 
-    public boolean collidePolygon(PolygonHitbox ph) {
+    private boolean collidePolygon(PolygonHitbox ph) {
         Vector2f[] vectors = ph.getVectors();
         for (int i = 0; i < vectors.length; i++) {
             if (collidePoint(vectors[i])) return true;
@@ -18,7 +18,7 @@ public class PolygonHitbox {
         return false;
     }
 
-    public boolean collidePoint(Vector2f v) {
+    private boolean collidePoint(Vector2f v) {
         boolean res = false;
         for (int i = 0; i < vectors.length; i++) {
             int next = i + 1;
@@ -52,4 +52,11 @@ public class PolygonHitbox {
         this.vectors = vectors;
     }
 
+    @Override
+    public boolean collide(Hitbox hitbox) {
+        if (hitbox instanceof PolygonHitbox) {
+            return collidePolygon((PolygonHitbox) hitbox);
+        }
+        else return false;
+    }
 }

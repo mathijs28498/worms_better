@@ -12,7 +12,6 @@ public class Worm extends GameObject {
     private Team team;
     private int xMouse, yMouse, maxHP;
     private float hp;
-    private PolygonHitbox hitbox;
 
     public Worm(GameHandler gameHandler, float x, float y, Team team) {
         super(gameHandler);
@@ -51,7 +50,7 @@ public class Worm extends GameObject {
 
         if (team == Team.ONE) g2d.setColor(Color.BLUE);
         else g2d.setColor(Color.ORANGE);
-        g2d.fill(hitbox.getPolygonFromVectors());
+        g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
 
         if (gameHandler.canShoot() && gameHandler.getCurrentTurn() == team) {
             g.setColor(Color.RED);
@@ -64,10 +63,6 @@ public class Worm extends GameObject {
         if (hp <= 0) {
             gameHandler.addToRemove(this);
         }
-    }
-
-    public PolygonHitbox getHitbox() {
-        return hitbox;
     }
 
     public void setxMouse(int xMouse) {

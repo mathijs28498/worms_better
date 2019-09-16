@@ -4,7 +4,7 @@ import wb.gameObjects.GameObject;
 import wb.gameObjects.Ground;
 import wb.gameObjects.Worm;
 import wb.gameObjects.projectiles.BasicRocket;
-import wb.gameObjects.projectiles.Explosion;
+import wb.gameObjects.explosions.Explosion;
 import wb.gameObjects.projectiles.Projectile;
 import wb.hitboxes.Vector2f;
 import wb.hud.HUD;
