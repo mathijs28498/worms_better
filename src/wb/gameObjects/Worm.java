@@ -6,6 +6,8 @@ import wb.hitboxes.Vector2f;
 import wb.utils.Team;
 
 import java.awt.*;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 
 public class Worm extends GameObject {
 
@@ -22,8 +24,8 @@ public class Worm extends GameObject {
         super(gameHandler);
         location = new Vector2f(x, y);
         this.team = team;
-        width = 25;
-        height = 50;
+        width = 40;
+        height = 70;
         maxHP = 100;
         hp = maxHP;
         hitbox = new PolygonHitbox(
@@ -69,6 +71,7 @@ public class Worm extends GameObject {
         g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
 
         if (gameHandler.canShoot() && gameHandler.getCurrentTurn() == team) {
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
             g.setColor(Color.GRAY);
             Polygon polygonOutline = new Polygon();
             for (Vector2f v : picOutline) polygonOutline.addPoint((int) v.x, (int) v.y);
@@ -78,11 +81,10 @@ public class Worm extends GameObject {
             Polygon polygonReal = new Polygon();
             for (Vector2f v : picReal) polygonReal.addPoint((int) v.x, (int) v.y);
             g2d.fill(polygonReal);
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 
             g.setColor(Color.WHITE);
             g2d.draw(polygonOutline);
-//            g.setColor(Color.RED);
-//            g.drawLine((int) location.x, (int) location.y, xMouse, yMouse);
         }
     }
 
@@ -107,9 +109,7 @@ public class Worm extends GameObject {
         if (power > picHeight) power = picHeight;
 
         if (power == picHeight) {
-            for (int i = 0; i < picReal.length; i++) {
-                picReal[i] = picOutline[i];
-            }
+            System.arraycopy(picOutline, 0, picReal, 0, picReal.length);
         } else {
             float newPicMaxWidth = picMaxWidth * power / picHeight;
             picROffset = new Vector2f[] {

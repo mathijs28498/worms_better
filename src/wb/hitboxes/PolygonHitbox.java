@@ -10,7 +10,7 @@ public class PolygonHitbox implements Hitbox {
         this.vectors = vectors;
     }
 
-    private boolean collidePolygon(PolygonHitbox ph) {
+    public boolean collidePolygon(PolygonHitbox ph) {
         Vector2f[] vectors = ph.getVectors();
         for (int i = 0; i < vectors.length; i++) {
             if (collidePoint(vectors[i])) return true;
@@ -18,7 +18,7 @@ public class PolygonHitbox implements Hitbox {
         return false;
     }
 
-    private boolean collidePoint(Vector2f v) {
+    public boolean collidePoint(Vector2f v) {
         boolean res = false;
         for (int i = 0; i < vectors.length; i++) {
             int next = i + 1;
@@ -32,6 +32,11 @@ public class PolygonHitbox implements Hitbox {
         }
 
         return res;
+    }
+
+    @Override
+    public boolean collideCircle(CircleHitbox hitbox) {
+        return false;
     }
 
     public Vector2f[] getVectors() {
@@ -54,9 +59,10 @@ public class PolygonHitbox implements Hitbox {
 
     @Override
     public boolean collide(Hitbox hitbox) {
-        if (hitbox instanceof PolygonHitbox) {
+        if (hitbox instanceof PolygonHitbox)
             return collidePolygon((PolygonHitbox) hitbox);
-        }
-        else return false;
+        else if (hitbox instanceof CircleHitbox)
+            return collideCircle((CircleHitbox) hitbox);
+        return false;
     }
 }

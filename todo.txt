@@ -5,3 +5,5 @@
 [ ] - Improve projectile sprite placement
 [ ] - Screenshake
 [X] - Manual power projectile
+[ ] - Explosion damage
+	[ ] - Circle hitbox

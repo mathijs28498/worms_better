@@ -61,8 +61,8 @@ public class GameHandler {
             playGround.add(new Ground(this, i));
         }
 
-        worms.add(new Worm(this, 54, Game.HEIGHT - 125, Team.ONE));
-        worms.add(new Worm(this, Game.WIDTH - 54, Game.HEIGHT - 125, Team.TWO));
+        worms.add(new Worm(this, 54, Game.HEIGHT - 135, Team.ONE));
+        worms.add(new Worm(this, Game.WIDTH - 54, Game.HEIGHT - 135, Team.TWO));
     }
 
 
