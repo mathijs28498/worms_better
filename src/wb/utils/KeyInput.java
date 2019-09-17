@@ -6,8 +6,7 @@ import wb.GameHandler;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-import static java.awt.event.KeyEvent.VK_ESCAPE;
-import static java.awt.event.KeyEvent.VK_R;
+import static java.awt.event.KeyEvent.*;
 
 public class KeyInput implements KeyListener {
 
@@ -28,11 +27,19 @@ public class KeyInput implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
+
         switch (keyCode) {
+            case VK_E:
+                if (gameHandler.isWaitingTurn())
+                    gameHandler.getWormTurn().nextWeapon();
+                break;
+            case VK_Q:
+                if (gameHandler.isWaitingTurn())
+                    gameHandler.getWormTurn().prevWeapon();
+                break;
             case VK_R:
-                if (gameHandler.isGameWon()) {
+                if (gameHandler.isGameWon())
                     gameHandler.reset();
-                }
                 break;
             case VK_ESCAPE:
                 System.exit(0);

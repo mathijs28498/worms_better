@@ -2,7 +2,7 @@
 [X] - More projectiles
 [ ] - Menu
 [ ] - Worm sprites
-[ ] - Improve projectile sprite placement
+[X] - Improve projectile sprite placement
 [ ] - Screenshake
 [X] - Manual power projectile
 [X] - Explosion damage

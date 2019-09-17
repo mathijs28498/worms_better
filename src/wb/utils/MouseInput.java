@@ -24,8 +24,8 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     @Override
     public void mousePressed(MouseEvent e) {
 
-        if (gameHandler.canShoot()) {
-            gameHandler.shoot();
+        if (gameHandler.isWaitingTurn()) {
+            gameHandler.getWormTurn().shoot();
         }
 
     }

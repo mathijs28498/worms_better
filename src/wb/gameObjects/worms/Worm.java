@@ -3,14 +3,13 @@ package wb.gameObjects.worms;
 import wb.Game;
 import wb.GameHandler;
 import wb.gameObjects.GameObject;
-import wb.gameObjects.weapons.BasicRocket;
-import wb.gameObjects.weapons.Fatty;
-import wb.gameObjects.weapons.WeaponType;
+import wb.gameObjects.weapons.*;
 import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
 import wb.utils.Team;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.util.Random;
 
 public class Worm extends GameObject {
@@ -27,6 +26,8 @@ public class Worm extends GameObject {
     private WeaponType currentWeaponType;
     private boolean isDead;
     private Color color;
+    private boolean isTurn;
+    private int maxDimensionImageSample = 20;
 
     public Worm(GameHandler gameHandler, float x, float y, Team team) {
         super(gameHandler);
@@ -37,7 +38,7 @@ public class Worm extends GameObject {
         maxHP = 100;
         hp = maxHP;
         shootLocation = new Vector2f((x < Game.WIDTH / 2f) ? x + width / 2f : x - width / 2f, y - 20);
-        currentWeaponType = WeaponType.FATTY;
+        currentWeaponType = WeaponType.BASICROCKET;
         hitbox = new PolygonHitbox(
                 new Vector2f(x - width / 2f, y - height / 2f),
                 new Vector2f(x + width / 2f, y - height / 2f),
@@ -79,7 +80,7 @@ public class Worm extends GameObject {
         g2d.setColor(color);
         g2d.fill(hitbox.getShape());
 
-        if (gameHandler.canShoot() && gameHandler.getCurrentTurn() == team) {
+        if (isTurn) {
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.75f));
             g.setColor(Color.GRAY);
             Polygon polygonOutline = new Polygon();
@@ -94,6 +95,25 @@ public class Worm extends GameObject {
 
             g.setColor(Color.WHITE);
             g2d.draw(polygonOutline);
+
+            BufferedImage image = currentWeaponType.getImage();
+            float imageWidth = image.getWidth();
+            float imageHeight = image.getHeight();
+            float realImageWidth, realImageHeight;
+
+            if (imageWidth <= maxDimensionImageSample && imageHeight <= maxDimensionImageSample) {
+                realImageWidth = imageWidth;
+                realImageHeight = imageHeight;
+            } else if (imageWidth > imageHeight) {
+                realImageWidth = maxDimensionImageSample;
+                realImageHeight = imageHeight / imageWidth * maxDimensionImageSample;
+
+            } else {
+                realImageWidth = imageWidth / imageHeight * maxDimensionImageSample;
+                realImageHeight = maxDimensionImageSample;
+            }
+
+            g.drawImage(image, (int) (shootLocation.x - realImageWidth / 2), (int) (shootLocation.y - realImageHeight / 2), (int) realImageWidth, (int) realImageHeight, null);
         }
     }
 
@@ -142,18 +162,21 @@ public class Worm extends GameObject {
 
         switch (currentWeaponType) {
             case BASICROCKET:
-                gameHandler.addWeapon(new BasicRocket(gameHandler, shootLocation.x, shootLocation.y, team, realPower,xDiff, yDiff));
+                gameHandler.shoot(this, new BasicRocket(gameHandler, shootLocation.x, shootLocation.y, team, realPower,xDiff, yDiff));
                 break;
             case FATTY:
-                gameHandler.addWeapon(new Fatty(gameHandler, shootLocation.x, shootLocation.y, team, realPower, xDiff, yDiff));
+                gameHandler.shoot(this, new Fatty(gameHandler, shootLocation.x, shootLocation.y, team, realPower, xDiff, yDiff));
+                break;
+            case HOMINGBOY:
+                gameHandler.shoot(this, new HomingBoy(gameHandler, shootLocation.x, shootLocation.y, team, realPower, xDiff, yDiff));
                 break;
         }
     }
 
-    public void takeDamage(int damage, Team team) {
-        if (!isDead) {
+    public void takeDamage(int damage) {
+        if (!isDead && damage > 0) {
             hp -= damage;
-            gameHandler.addDamageText(new DamageText(gameHandler, damage, 50, location.x, location.y - width / 2f - 35, team));
+            gameHandler.addDamageText(new DamageText(gameHandler, damage, 50, location.x, location.y - width / 2f - 35));
             if (hp <= 0) {
                 isDead = true;
                 gameHandler.addToRemove(this);
@@ -161,10 +184,22 @@ public class Worm extends GameObject {
         }
     }
 
+    public void nextWeapon() {
+        currentWeaponType = WeaponType.getNextWeapon(currentWeaponType);
+    }
+
+    public void prevWeapon() {
+        currentWeaponType = WeaponType.getPreviousWeapon(currentWeaponType);
+    }
+
     public void setMouse(float x, float y) {
         mouse = new Vector2f(x, y);
         calcPICOutline();
         calcPICReal();
+    }
+
+    public void setTurn(boolean turn) {
+        isTurn = turn;
     }
 
     public Team getTeam() {

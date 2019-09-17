@@ -10,6 +10,8 @@ public class Images {
     public static BufferedImage background;
     public static BufferedImage basicRocket;
     public static BufferedImage cursor;
+    public static BufferedImage fatty;
+    public static BufferedImage homingBoy;
 
     public static void loadImages() {
 
@@ -17,6 +19,8 @@ public class Images {
             background = ImageIO.read(new File("res/background.jpg"));
             basicRocket = ImageIO.read(new File("res/basicRocket.png"));
             cursor = ImageIO.read(new File("res/cursor.png"));
+            fatty = ImageIO.read(new File("res/fatty.png"));
+            homingBoy = ImageIO.read(new File("res/homingBoy.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

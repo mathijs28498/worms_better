@@ -6,6 +6,7 @@ import wb.gameObjects.Ground;
 import wb.gameObjects.worms.Worm;
 import wb.hitboxes.CircleHitbox;
 import wb.hitboxes.Hitbox;
+import wb.utils.Images;
 import wb.utils.Team;
 import wb.utils.Values;
 
@@ -14,14 +15,13 @@ import java.util.List;
 
 public class Fatty extends Weapon {
 
-    private int maxRadius;
     private float radius;
 
+
     public Fatty(GameHandler gameHandler, float x, float y, Team team, float power, float xDiff, float yDiff) {
-        super(gameHandler, x, y, team, (int) (5 + (20 * power)), xDiff, yDiff);
-        damage = 10;
+        super(gameHandler, x, y, team, power, xDiff, yDiff);
+        damage = 20;
         terrainDamage = 30;
-        maxRadius = 50;
         radius = 5;
 
         hitbox = new CircleHitbox(location, (int) radius);
@@ -60,7 +60,7 @@ public class Fatty extends Weapon {
                 Hitbox wormHitbox = w.getHitbox();
                 if (hitbox.collide(wormHitbox)) {
                     gameHandler.addToRemove(this);
-                    w.takeDamage(damage, team);
+                    w.takeDamage(damage);
                 }
             }
         }
@@ -80,8 +80,11 @@ public class Fatty extends Weapon {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.WHITE);
-        ((Graphics2D) g).fill(hitbox.getShape());
+//        g.setColor(Color.WHITE);
+//        ((Graphics2D) g).fill(hitbox.getShape());
+
+        g.drawImage(Images.fatty, (int) (location.x - radius + 1), (int) (location.y - radius + 1), (int) radius * 2, (int) radius * 2, null);
+
 
     }
 }

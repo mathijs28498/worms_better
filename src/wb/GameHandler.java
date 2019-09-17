@@ -42,6 +42,9 @@ public class GameHandler {
     private String winningString;
     private int fps;
 
+    private boolean waitingTurn;
+    private Worm wormTurn;
+
     private TestCircleHitbox testCircleHitbox;
     private TestPolygonHitbox testPolygonHitbox;
 
@@ -59,6 +62,7 @@ public class GameHandler {
 
         hud = new HUD(this);
 
+        waitingTurn = true;
         addInitGameObjects();
 
         wind = r.nextInt(7) - 3;
@@ -74,6 +78,17 @@ public class GameHandler {
 
         worms.add(new Worm(this, 54, Game.HEIGHT - 135, Team.ONE));
         worms.add(new Worm(this, Game.WIDTH - 54, Game.HEIGHT - 135, Team.TWO));
+
+        figureWormTurn();
+    }
+
+    private void figureWormTurn() {
+        for (Worm worm : worms) {
+            if (worm.getTeam() == currentTurn) {
+                worm.setTurn(true);
+                wormTurn = worm;
+            }
+        }
     }
 
 
@@ -136,7 +151,10 @@ public class GameHandler {
             }
         }
 
-        checkGameWon();
+        if (!waitingTurn) {
+            checkGameWon();
+            checkEndTurn();
+        }
     }
 
     private void checkGameWon() {
@@ -151,27 +169,32 @@ public class GameHandler {
         }
     }
 
-    public void shoot() {
-        for (Worm worm : worms) {
-            if (worm.getTeam() == currentTurn) {
-                worm.shoot();
-//                Vector2f vector = worm.getShootLocation();
-//                float power = worm.getPower() / worm.getMaxPower();
-//                addWeapon(new BasicRocket(this, vector.x, vector.y, currentTurn, power,x - vector.x, y - vector.y));
-            }
+    private void checkEndTurn() {
+        if (weapons.isEmpty() && explosions.isEmpty()) {
+            figureWormTurn();
+            waitingTurn = true;
+            wind = r.nextInt(7) - 3;
         }
+    }
 
-        if (currentTurn == Team.ONE)
-            currentTurn = Team.TWO;
-        else
-            currentTurn = Team.ONE;
+    public void shoot(Worm worm, Weapon weapon) {
+        worm.setTurn(false);
+        waitingTurn = false;
+        addWeapon(weapon);
 
-        wind = r.nextInt(7) - 3;
+        if (currentTurn == Team.ONE) currentTurn = Team.TWO;
+        else currentTurn = Team.ONE;
+
         turnCounter++;
     }
 
-    public boolean canShoot() {
-        return !gameWon && weapons.size() == 0 && explosions.size() == 0;
+
+    public boolean isWaitingTurn() {
+        return waitingTurn;
+    }
+
+    public Worm getWormTurn() {
+        return wormTurn;
     }
 
     public float getWind() {

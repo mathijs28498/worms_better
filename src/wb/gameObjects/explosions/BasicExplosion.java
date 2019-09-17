@@ -40,7 +40,7 @@ public class BasicExplosion extends Explosion {
         for (Worm worm : gameHandler.getWorms()) {
             if (worm.getTeam() != team && !hitWorms.contains(worm)) {
                 if (hitbox.collide(worm.getHitbox())) {
-                    worm.takeDamage(damage, team);
+                    worm.takeDamage(damage);
                     hitWorms.add(worm);
                 }
             }
