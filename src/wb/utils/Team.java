@@ -1,6 +1,18 @@
 package wb.utils;
 
+import java.awt.*;
+
 public enum Team {
-    ONE,
-    TWO
+    ONE(Color.BLUE),
+    TWO(Color.ORANGE);
+
+    private Color color;
+
+    Team(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
 }

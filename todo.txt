@@ -1,5 +1,5 @@
 [ ] - Gravity worms
-[ ] - More projectiles
+[X] - More projectiles
 [ ] - Menu
 [ ] - Worm sprites
 [ ] - Improve projectile sprite placement
@@ -11,3 +11,4 @@
 [X] - Move shoot to worm, change weapons
 [X] - Better terrain modification
 [X] - Show damage after being hit
+[ ] - Handle turns in gameHandler

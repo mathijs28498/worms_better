@@ -10,6 +10,7 @@ import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
 import wb.utils.Images;
 import wb.utils.Team;
+import wb.utils.Values;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -37,8 +38,6 @@ public class BasicRocket extends Weapon {
         };
         hitbox = new PolygonHitbox();
         calcAngleHitbox();
-
-        xVel += gameHandler.getWind();
     }
 
     private void calcAngleHitbox() {
@@ -62,7 +61,7 @@ public class BasicRocket extends Weapon {
 
         calcAngleHitbox();
 
-        yVel += 0.3;
+        yVel += Values.GRAVITY;
 
 
         if (isOutOfBounds()) {
@@ -77,7 +76,7 @@ public class BasicRocket extends Weapon {
                 Hitbox wormHitbox = w.getHitbox();
                 if (hitbox.collide(wormHitbox) || wormHitbox.collide(hitbox)) {
                     explosionPlusDeletion();
-                    w.takeDamage(damage);
+                    w.takeDamage(damage, team);
                 }
             }
         }
@@ -102,7 +101,7 @@ public class BasicRocket extends Weapon {
 
     private boolean isOutOfBounds() {
         for (Vector2f v : ((PolygonHitbox) hitbox).getVectors()) {
-            if (v.x > 0 && v.x < Game.WIDTH && v.x > 0 && v.y < Game.HEIGHT) {
+            if (v.x > 0 && v.x < Game.WIDTH && v.x > 0) {
                 return false;
             }
         }

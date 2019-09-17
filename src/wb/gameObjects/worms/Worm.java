@@ -4,6 +4,7 @@ import wb.Game;
 import wb.GameHandler;
 import wb.gameObjects.GameObject;
 import wb.gameObjects.weapons.BasicRocket;
+import wb.gameObjects.weapons.Fatty;
 import wb.gameObjects.weapons.WeaponType;
 import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
@@ -25,6 +26,7 @@ public class Worm extends GameObject {
     private Vector2f shootLocation;
     private WeaponType currentWeaponType;
     private boolean isDead;
+    private Color color;
 
     public Worm(GameHandler gameHandler, float x, float y, Team team) {
         super(gameHandler);
@@ -35,7 +37,7 @@ public class Worm extends GameObject {
         maxHP = 100;
         hp = maxHP;
         shootLocation = new Vector2f((x < Game.WIDTH / 2f) ? x + width / 2f : x - width / 2f, y - 20);
-        currentWeaponType = WeaponType.BASICROCKET;
+        currentWeaponType = WeaponType.FATTY;
         hitbox = new PolygonHitbox(
                 new Vector2f(x - width / 2f, y - height / 2f),
                 new Vector2f(x + width / 2f, y - height / 2f),
@@ -54,12 +56,12 @@ public class Worm extends GameObject {
         calcPICOutline();
         calcPICReal();
 
+        color = team.getColor();
         gameHandler.addToWormCounter(team);
     }
 
     @Override
     public void tick() {
-//        hp -= 0.1;
     }
 
     @Override
@@ -74,8 +76,7 @@ public class Worm extends GameObject {
 
         Graphics2D g2d = (Graphics2D) g;
 
-        if (team == Team.ONE) g2d.setColor(Color.BLUE);
-        else g2d.setColor(Color.ORANGE);
+        g2d.setColor(color);
         g2d.fill(hitbox.getShape());
 
         if (gameHandler.canShoot() && gameHandler.getCurrentTurn() == team) {
@@ -136,18 +137,23 @@ public class Worm extends GameObject {
 
     public void shoot() {
         float realPower = power / maxPower;
+        float xDiff = mouse.x - shootLocation.x;
+        float yDiff = mouse.y - shootLocation.y;
+
         switch (currentWeaponType) {
             case BASICROCKET:
-                gameHandler.addWeapon(new BasicRocket(gameHandler, shootLocation.x, shootLocation.y, gameHandler.getCurrentTurn(),
-                        realPower,mouse.x - shootLocation.x, mouse.y - shootLocation.y));
+                gameHandler.addWeapon(new BasicRocket(gameHandler, shootLocation.x, shootLocation.y, team, realPower,xDiff, yDiff));
+                break;
+            case FATTY:
+                gameHandler.addWeapon(new Fatty(gameHandler, shootLocation.x, shootLocation.y, team, realPower, xDiff, yDiff));
                 break;
         }
     }
 
-    public void takeDamage(int damage) {
+    public void takeDamage(int damage, Team team) {
         if (!isDead) {
             hp -= damage;
-            gameHandler.addDamageText(new DamageText(gameHandler, damage, 50, location.x, location.y - width / 2f - 35));
+            gameHandler.addDamageText(new DamageText(gameHandler, damage, 50, location.x, location.y - width / 2f - 35, team));
             if (hp <= 0) {
                 isDead = true;
                 gameHandler.addToRemove(this);

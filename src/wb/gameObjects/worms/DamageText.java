@@ -3,6 +3,7 @@ package wb.gameObjects.worms;
 import wb.GameHandler;
 import wb.gameObjects.GameObject;
 import wb.hitboxes.Vector2f;
+import wb.utils.Team;
 
 import java.awt.*;
 import java.util.Random;
@@ -12,13 +13,15 @@ public class DamageText extends GameObject {
     private String damage;
     private int timer, currentTicks;
     private Font font;
-    private Random r;
+    private Team team;
 
-    public DamageText(GameHandler gameHandler, int damage, int timer, float x, float y) {
+    public DamageText(GameHandler gameHandler, int damage, int timer, float x, float y, Team team) {
         super(gameHandler);
         this.damage = String.valueOf(damage);
         this.timer = timer;
-        r = new Random();
+        this.team = team;
+
+        Random r = new Random();
         float xReal = r.nextInt(30) - 15 + x;
         float yReal = r.nextInt(30) - 15 + y;
 
@@ -41,6 +44,7 @@ public class DamageText extends GameObject {
         if (alpha < 0) alpha = 0;
 
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g.setColor(team.getColor());
         g.setFont(font);
         g.drawString(damage, (int) location.x - g.getFontMetrics().stringWidth(damage) / 2, (int) location.y);
         ((Graphics2D) g).setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));

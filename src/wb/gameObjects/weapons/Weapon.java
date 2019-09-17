@@ -19,5 +19,7 @@ public abstract class Weapon extends GameObject {
         float mul = (float) (vel / Math.sqrt(xDiff * xDiff + yDiff * yDiff));
         xVel = xDiff * mul;
         yVel = yDiff * mul;
+
+        xVel += gameHandler.getWind();
     }
 }
