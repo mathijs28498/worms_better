@@ -71,15 +71,12 @@ public class HomingBoy extends Weapon {
     }
 
     private void checkCollisionGround() {
-        List<Ground> playGround = gameHandler.getPlayGround();
-
-        for (Ground g : playGround) {
-            Hitbox groundHitbox = g.getHitbox();
-            if (hitbox.collide(groundHitbox) || groundHitbox.collide(hitbox)) {
-                explosionPlusDeletion();
-                g.hit(terrainDamage, (int) location.x);
-                destroyed = true;
-            }
+        Ground ground = gameHandler.getGround();
+        Hitbox groundHitbox = ground.getHitbox();
+        if (hitbox.collide(groundHitbox) || groundHitbox.collide(hitbox)) {
+            explosionPlusDeletion();
+            ground.hit(terrainDamage, location.x);
+            destroyed = true;
         }
     }
 

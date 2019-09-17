@@ -29,7 +29,7 @@ public class Fatty extends Weapon {
 
     private boolean isOutOfBounds() {
         int radius = ((CircleHitbox) hitbox).getRadius();
-        if (location.x - radius > Game.WIDTH || location.x < 0)
+        if (location.x - radius * 2 > Game.WIDTH || location.x < 0)
             return true;
         return false;
     }
@@ -67,14 +67,11 @@ public class Fatty extends Weapon {
     }
 
     private void checkCollisionGround() {
-        List<Ground> playGround = gameHandler.getPlayGround();
-
-        for (Ground g : playGround) {
-            Hitbox groundHitbox = g.getHitbox();
-            if (hitbox.collide(groundHitbox)) {
-                gameHandler.addToRemove(this);
-                g.hit(terrainDamage, (int) location.x);
-            }
+        Ground ground = gameHandler.getGround();
+        Hitbox groundHitbox = ground.getHitbox();
+        if (hitbox.collide(groundHitbox) || groundHitbox.collide(hitbox)) {
+            gameHandler.addToRemove(this);
+            ground.hit(terrainDamage, location.x);
         }
     }
 

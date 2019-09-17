@@ -11,4 +11,10 @@
 [X] - Move shoot to worm, change weapons
 [X] - Better terrain modification
 [X] - Show damage after being hit
-[ ] - Handle turns in gameHandler
+[X] - Handle turns in gameHandler
+[X] - Make ground 1 object
+[ ] - Moving worm
+[ ] - Improve weapon switching
+[ ] - Add limited weapons
+[ ] - Fix power indicator
+[ ] - Fix circle hitbox (circle inside polygon)

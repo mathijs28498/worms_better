@@ -22,7 +22,8 @@ public class GameHandler {
 
     private List<Worm> worms;
     private List<Weapon> weapons;
-    private List<Ground> playGround;
+//    private List<Ground> playGround;
+    private Ground ground;
     private List<Explosion> explosions;
     private List<GameObject> objectsToRemove;
     private List<DamageText> damageTexts;
@@ -45,13 +46,13 @@ public class GameHandler {
     private boolean waitingTurn;
     private Worm wormTurn;
 
-    private TestCircleHitbox testCircleHitbox;
-    private TestPolygonHitbox testPolygonHitbox;
+//    private TestCircleHitbox testCircleHitbox;
+//    private TestPolygonHitbox testPolygonHitbox;
 
     public GameHandler() {
         worms = new ArrayList<>();
         weapons = new ArrayList<>();
-        playGround = new ArrayList<>();
+        ground = new Ground(this, 0, Game.HEIGHT, Game.WIDTH, 10);
         explosions = new ArrayList<>();
         objectsToRemove = new ArrayList<>();
         damageTexts = new ArrayList<>();
@@ -72,9 +73,9 @@ public class GameHandler {
     }
 
     private void addInitGameObjects() {
-        for (int i = 0; i < 10; i++) {
-            playGround.add(new Ground(this, i));
-        }
+//        for (int i = 0; i < 10; i++) {
+//            playGround.add(new Ground(this, i));
+//        }
 
         worms.add(new Worm(this, 54, Game.HEIGHT - 135, Team.ONE));
         worms.add(new Worm(this, Game.WIDTH - 54, Game.HEIGHT - 135, Team.TWO));
@@ -99,9 +100,7 @@ public class GameHandler {
         for (GameObject go : weapons) {
             go.tick();
         }
-        for (GameObject go : playGround) {
-            go.tick();
-        }
+        ground.tick();
         for (GameObject go : explosions) {
             go.tick();
         }
@@ -120,9 +119,7 @@ public class GameHandler {
         for (int i = 0; i < weapons.size(); i++) {
             weapons.get(i).render(g);
         }
-        for (GameObject go : playGround) {
-            go.render(g);
-        }
+        ground.render(g);
         for (GameObject go : worms) {
             go.render(g);
         }
@@ -236,7 +233,7 @@ public class GameHandler {
 
         worms = new ArrayList<>();
         weapons = new ArrayList<>();
-        playGround = new ArrayList<>();
+        ground = new Ground(this, 0, Game.HEIGHT, Game.WIDTH, 10);
         explosions = new ArrayList<>();
         objectsToRemove = new ArrayList<>();
         currentTurn = Team.ONE;
@@ -250,9 +247,9 @@ public class GameHandler {
         wind = r.nextInt(7) - 3;
     }
 
-    public TestPolygonHitbox getTestPolygonHitbox() {
-        return testPolygonHitbox;
-    }
+//    public TestPolygonHitbox getTestPolygonHitbox() {
+//        return testPolygonHitbox;
+//    }
 
     public void addToRemove(GameObject go) {
         objectsToRemove.add(go);
@@ -286,8 +283,8 @@ public class GameHandler {
         return worms;
     }
 
-    public List<Ground> getPlayGround() {
-        return playGround;
+    public Ground getGround() {
+        return ground;
     }
 
     public void setCurrentTurn(Team currentTurn) {

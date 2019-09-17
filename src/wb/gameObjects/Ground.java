@@ -10,72 +10,79 @@ import java.util.Random;
 
 public class Ground extends GameObject {
 
-    private int leftX, rightX, leftY, rightY, pos;
     private static int maxY = Game.HEIGHT - 20;
+    private int xStart, yBot, topAmount;
+    float widthTopPiece;
+    private Random r;
 
-    public Ground(GameHandler gameHandler, int pos) {
+
+    public Ground(GameHandler gameHandler, int xStart, int yBot, int width, int topAmount) {
         super(gameHandler);
-        this.pos = pos;
-        width = Game.WIDTH / 10;
-        leftX = width * pos;
-        rightX = width * (pos + 1);
-        Random r = new Random();
-        if (pos == 0 || pos == 9) {
-            leftY = Game.HEIGHT - 100;
-            rightY = Game.HEIGHT - 100;
-        } else if (pos == 8) {
-            leftY = gameHandler.getPlayGround().get(pos - 1).getRightY();
-            rightY = Game.HEIGHT - 100;
-        } else {
-            leftY = gameHandler.getPlayGround().get(pos - 1).getRightY();
-            rightY = (int) (Game.HEIGHT - (r.nextInt(200) + 70 * (4.5 - Math.abs(4.5 - pos))));
+        this.xStart = xStart;
+        this.yBot = yBot;
+        this.width = width;
+        this.topAmount = topAmount;
+        widthTopPiece = width / topAmount;
+
+        r = new Random();
+
+        initHitbox();
+    }
+
+    private void initHitbox() {
+        Vector2f[] vectors = new Vector2f[topAmount + 3];
+
+        for (int i = 0; i <= topAmount; i++) {
+            if (i <= 1 || i >= topAmount - 1)
+                vectors[i] = new Vector2f(widthTopPiece * i + xStart, Game.HEIGHT - 100);
+            else {
+                float middle = topAmount / 2f;
+                vectors[i] = new Vector2f(widthTopPiece * i + xStart, (float) (Game.HEIGHT - (r.nextInt(200) + 70 * (middle - Math.abs(middle - i)))));
+            }
         }
 
-        calcHitbox();
+        vectors[topAmount + 1] = new Vector2f(width + xStart, yBot);
+        vectors[topAmount + 2] = new Vector2f(xStart, yBot);
+
+        hitbox = new PolygonHitbox(vectors);
     }
 
-    private void calcHitbox() {
-        hitbox = new PolygonHitbox(
-                new Vector2f(leftX, leftY),
-                new Vector2f(rightX, rightY),
-                new Vector2f(rightX, Game.HEIGHT),
-                new Vector2f(leftX, Game.HEIGHT)
-        );
-    }
+    public void hit(int damage, float x) {
+        PolygonHitbox polyHitbox = (PolygonHitbox) hitbox;
+        Vector2f[] vectors = polyHitbox.getVectors();
 
-    public void hit(int damage, int x) {
-        float totalDistance = Math.abs(rightX - leftX);
-        float percentageLeft = Math.abs(leftX - x) / totalDistance;
-        float percentageRight = Math.abs(rightX - x) / totalDistance;
+        Vector2f vectorLeft = null, vectorRight = null;
 
-        lowerLeftY((int) ((1 - percentageLeft) * damage));
-        lowerRightY((int) ((1 - percentageRight) * damage));
+        for (int i = 1; i <= topAmount; i++) {
+            int compare = (int) (x - (xStart + i * widthTopPiece));
+            if (compare == 0) {
+                vectorLeft = vectors[i];
+                break;
+            } else if (compare < 0) {
+                vectorLeft = vectors[i - 1];
+                vectorRight = vectors[i];
+                break;
+            }
+        }
 
-        calcHitbox();
-    }
-
-    private void lowerLeftY(int damage) {
-        if (leftY < maxY) {
-            addLeftY(damage);
-            if (pos > 0) {
-                Ground g = gameHandler.getPlayGround().get(pos - 1);
-                g.addRightY(damage);
-                g.calcHitbox();
+        if (vectorRight == null) {
+            vectorLeft.y = vectorLeft.y + damage;
+        } else if (vectorLeft.y < maxY || vectorRight.y < maxY) {
+            float totalDistance = Math.abs(vectorLeft.x - vectorRight.x);
+            float percentageLeft = Math.abs(vectorLeft.x - x) / totalDistance;
+            float percentageRight = Math.abs(vectorRight.x - x) / totalDistance;
+            float leftDamage = (1 - percentageLeft) * damage;
+            float rightDamage = (1 - percentageRight) * damage;
+            if (vectorLeft.y < maxY) {
+                vectorLeft.y = vectorLeft.y + leftDamage;
+                if (vectorLeft.y > maxY) vectorLeft.y = maxY;
+            }
+            if (vectorRight.y < maxY) {
+                vectorRight.y = vectorRight.y +  rightDamage;
+                if (vectorRight.y > maxY) vectorRight.y = maxY;
             }
         }
     }
-
-    private void lowerRightY(int damage) {
-        if (rightY < maxY) {
-            addRightY(damage);
-            if (pos < 9) {
-                Ground g = gameHandler.getPlayGround().get(pos + 1);
-                g.addLeftY(damage);
-                g.calcHitbox();
-            }
-        }
-    }
-
 
     @Override
     public void tick() {
@@ -86,20 +93,7 @@ public class Ground extends GameObject {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.GREEN);
-        g2d.fill(((PolygonHitbox) hitbox).getShape());
+        g2d.fill(hitbox.getShape());
     }
 
-    public void addLeftY(int yDiff) {
-        leftY += yDiff;
-        if (leftY > maxY) leftY = maxY;
-    }
-
-    public int getRightY() {
-        return rightY;
-    }
-
-    public void addRightY(int yDiff) {
-        rightY += yDiff;
-        if (rightY > maxY) rightY = maxY;
-    }
 }
