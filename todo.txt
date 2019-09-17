@@ -5,5 +5,9 @@
 [ ] - Improve projectile sprite placement
 [ ] - Screenshake
 [X] - Manual power projectile
-[ ] - Explosion damage
-	[ ] - Circle hitbox
+[X] - Explosion damage
+	[X] - Circle hitbox
+[X] - Change shooting position to edge
+[X] - Move shoot to worm, change weapons
+[X] - Better terrain modification
+[X] - Show damage after being hit

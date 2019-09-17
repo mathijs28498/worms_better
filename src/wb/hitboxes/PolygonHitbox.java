@@ -43,7 +43,7 @@ public class PolygonHitbox implements Hitbox {
         return vectors;
     }
 
-    public Polygon getPolygonFromVectors() {
+    public Shape getShape() {
         Polygon res = new Polygon();
 
         for (Vector2f v : vectors) {

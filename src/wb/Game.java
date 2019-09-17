@@ -13,7 +13,6 @@ public class Game extends Canvas implements Runnable {
 
     private Thread mainThread;
     private GameHandler gameHandler;
-    private MouseInput mouseInput;
 
     private boolean running;
 
@@ -30,7 +29,7 @@ public class Game extends Canvas implements Runnable {
 
     private void initCanvas() {
         addKeyListener(new KeyInput(gameHandler));
-        mouseInput = new MouseInput(gameHandler);
+        MouseInput mouseInput = new MouseInput(gameHandler);
         addMouseListener(mouseInput);
         addMouseMotionListener(mouseInput);
 

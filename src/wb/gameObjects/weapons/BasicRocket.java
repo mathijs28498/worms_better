@@ -1,9 +1,9 @@
-package wb.gameObjects.projectiles;
+package wb.gameObjects.weapons;
 
 import wb.Game;
 import wb.GameHandler;
 import wb.gameObjects.Ground;
-import wb.gameObjects.Worm;
+import wb.gameObjects.worms.Worm;
 import wb.gameObjects.explosions.BasicExplosion;
 import wb.hitboxes.Hitbox;
 import wb.hitboxes.PolygonHitbox;
@@ -17,14 +17,16 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-public class BasicRocket extends Projectile {
+public class BasicRocket extends Weapon {
 
     private Vector2f[] originalVectors;
+    private int expDamage;
 
     public BasicRocket(GameHandler gameHandler, float x, float y, Team team, float power, float xDiff, float yDiff) {
         super(gameHandler, x , y, team, (int) (5 + (20 * power)), xDiff, yDiff);
         damage = 20;
         terrainDamage = 20;
+        expDamage = 10;
         width = 10;
         height = 20;
         originalVectors = new Vector2f[]{
@@ -74,9 +76,8 @@ public class BasicRocket extends Projectile {
             if (w.getTeam() != team) {
                 Hitbox wormHitbox = w.getHitbox();
                 if (hitbox.collide(wormHitbox) || wormHitbox.collide(hitbox)) {
+                    explosionPlusDeletion();
                     w.takeDamage(damage);
-                    gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
-                    gameHandler.addToRemove(this);
                 }
             }
         }
@@ -88,11 +89,15 @@ public class BasicRocket extends Projectile {
         for (Ground g : playGround) {
             Hitbox groundHitbox = g.getHitbox();
             if (hitbox.collide(groundHitbox) || groundHitbox.collide(hitbox)) {
-                gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 50, 50, 60));
-                gameHandler.addToRemove(this);
+                explosionPlusDeletion();
                 g.hit(terrainDamage, (int) location.x);
             }
         }
+    }
+
+    private void explosionPlusDeletion() {
+        gameHandler.addExplosion(new BasicExplosion(gameHandler, location, 25, 60, expDamage, team));
+        gameHandler.addToRemove(this);
     }
 
     private boolean isOutOfBounds() {
@@ -109,7 +114,7 @@ public class BasicRocket extends Projectile {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
 //        g2d.setColor(Color.PINK);
-//        g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
+//        g2d.fill(hitbox.getShape());
 
 
         float angle = 0;

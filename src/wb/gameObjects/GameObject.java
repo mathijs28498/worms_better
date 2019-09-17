@@ -36,4 +36,8 @@ public abstract class GameObject {
     public int getHeight() {
         return height;
     }
+
+    public void setLocation(Vector2f location) {
+        this.location = location;
+    }
 }

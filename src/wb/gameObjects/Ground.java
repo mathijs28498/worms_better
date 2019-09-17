@@ -2,7 +2,6 @@ package wb.gameObjects;
 
 import wb.Game;
 import wb.GameHandler;
-import wb.hitboxes.Hitbox;
 import wb.hitboxes.PolygonHitbox;
 import wb.hitboxes.Vector2f;
 
@@ -12,7 +11,7 @@ import java.util.Random;
 public class Ground extends GameObject {
 
     private int leftX, rightX, leftY, rightY, pos;
-    private static int maxY = Game.HEIGHT - 50;
+    private static int maxY = Game.HEIGHT - 20;
 
     public Ground(GameHandler gameHandler, int pos) {
         super(gameHandler);
@@ -45,17 +44,12 @@ public class Ground extends GameObject {
     }
 
     public void hit(int damage, int x) {
-        int leftDistance = Math.abs(leftX - x);
-        int rightDistance = Math.abs(rightX - x);
+        float totalDistance = Math.abs(rightX - leftX);
+        float percentageLeft = Math.abs(leftX - x) / totalDistance;
+        float percentageRight = Math.abs(rightX - x) / totalDistance;
 
-        if (leftDistance < rightDistance) {
-            lowerLeftY(damage);
-        } else if (leftDistance > rightDistance) {
-            lowerRightY(damage);
-        } else {
-            lowerLeftY(damage / 2);
-            lowerRightY(damage / 2);
-        }
+        lowerLeftY((int) ((1 - percentageLeft) * damage));
+        lowerRightY((int) ((1 - percentageRight) * damage));
 
         calcHitbox();
     }
@@ -92,7 +86,7 @@ public class Ground extends GameObject {
     public void render(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setColor(Color.GREEN);
-        g2d.fill(((PolygonHitbox) hitbox).getPolygonFromVectors());
+        g2d.fill(((PolygonHitbox) hitbox).getShape());
     }
 
     public void addLeftY(int yDiff) {

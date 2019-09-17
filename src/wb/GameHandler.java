@@ -2,10 +2,12 @@ package wb;
 
 import wb.gameObjects.GameObject;
 import wb.gameObjects.Ground;
-import wb.gameObjects.Worm;
-import wb.gameObjects.projectiles.BasicRocket;
+import wb.gameObjects.TestCircleHitbox;
+import wb.gameObjects.TestPolygonHitbox;
+import wb.gameObjects.worms.DamageText;
+import wb.gameObjects.worms.Worm;
 import wb.gameObjects.explosions.Explosion;
-import wb.gameObjects.projectiles.Projectile;
+import wb.gameObjects.weapons.Weapon;
 import wb.hitboxes.Vector2f;
 import wb.hud.HUD;
 import wb.utils.Images;
@@ -19,10 +21,11 @@ import java.util.Random;
 public class GameHandler {
 
     private List<Worm> worms;
-    private List<Projectile> projectiles;
+    private List<Weapon> weapons;
     private List<Ground> playGround;
     private List<Explosion> explosions;
     private List<GameObject> objectsToRemove;
+    private List<DamageText> damageTexts;
 
     private int wind;
     private Random r;
@@ -39,12 +42,17 @@ public class GameHandler {
     private String winningString;
     private int fps;
 
+    private TestCircleHitbox testCircleHitbox;
+    private TestPolygonHitbox testPolygonHitbox;
+
     public GameHandler() {
         worms = new ArrayList<>();
-        projectiles = new ArrayList<>();
+        weapons = new ArrayList<>();
         playGround = new ArrayList<>();
         explosions = new ArrayList<>();
         objectsToRemove = new ArrayList<>();
+        damageTexts = new ArrayList<>();
+
         currentTurn = Team.ONE;
         r = new Random();
         turnCounter = 0;
@@ -54,6 +62,9 @@ public class GameHandler {
         addInitGameObjects();
 
         wind = r.nextInt(7) - 3;
+
+//        testCircleHitbox = new TestCircleHitbox(this, 500, 300);
+//        testPolygonHitbox = new TestPolygonHitbox(this, 0, 0, testCircleHitbox);
     }
 
     private void addInitGameObjects() {
@@ -70,7 +81,7 @@ public class GameHandler {
         for (GameObject go : worms) {
             go.tick();
         }
-        for (GameObject go : projectiles) {
+        for (GameObject go : weapons) {
             go.tick();
         }
         for (GameObject go : playGround) {
@@ -78,6 +89,9 @@ public class GameHandler {
         }
         for (GameObject go : explosions) {
             go.tick();
+        }
+        for (DamageText dt : damageTexts) {
+            dt.tick();
         }
 
         if (!gameWon) {
@@ -88,8 +102,8 @@ public class GameHandler {
     public void render(Graphics g) {
         g.drawImage(Images.background, 0, 0, Game.WIDTH, Game.HEIGHT, null);
 
-        for (int i = 0; i < projectiles.size(); i++) {
-            projectiles.get(i).render(g);
+        for (int i = 0; i < weapons.size(); i++) {
+            weapons.get(i).render(g);
         }
         for (GameObject go : playGround) {
             go.render(g);
@@ -101,15 +115,21 @@ public class GameHandler {
             explosions.get(i).render(g);
         }
 
+        for (DamageText dt : damageTexts) {
+            dt.render(g);
+        }
+
         hud.render(g);
     }
 
     private void removeGameObjects() {
         for (GameObject go: objectsToRemove) {
-            if (go instanceof Projectile)
-                projectiles.remove(go);
+            if (go instanceof Weapon)
+                weapons.remove(go);
             else if (go instanceof Explosion)
                 explosions.remove(go);
+            else if (go instanceof DamageText)
+                damageTexts.remove(go);
             else if (go instanceof Worm) {
                 worms.remove(go);
                 subtractFromWormCounter(((Worm) go).getTeam());
@@ -131,12 +151,13 @@ public class GameHandler {
         }
     }
 
-    public void shoot(int x, int y) {
+    public void shoot() {
         for (Worm worm : worms) {
             if (worm.getTeam() == currentTurn) {
-                Vector2f vector = worm.getLocation();
-                float power = worm.getPower() / worm.getMaxPower();
-                addProjectile(new BasicRocket(this, vector.x, vector.y, currentTurn, power,x - vector.x, y - vector.y));
+                worm.shoot();
+//                Vector2f vector = worm.getShootLocation();
+//                float power = worm.getPower() / worm.getMaxPower();
+//                addWeapon(new BasicRocket(this, vector.x, vector.y, currentTurn, power,x - vector.x, y - vector.y));
             }
         }
 
@@ -150,7 +171,7 @@ public class GameHandler {
     }
 
     public boolean canShoot() {
-        return !gameWon && projectiles.size() == 0 && explosions.size() == 0;
+        return !gameWon && weapons.size() == 0 && explosions.size() == 0;
     }
 
     public float getWind() {
@@ -191,7 +212,7 @@ public class GameHandler {
         gameWon = false;
 
         worms = new ArrayList<>();
-        projectiles = new ArrayList<>();
+        weapons = new ArrayList<>();
         playGround = new ArrayList<>();
         explosions = new ArrayList<>();
         objectsToRemove = new ArrayList<>();
@@ -206,12 +227,20 @@ public class GameHandler {
         wind = r.nextInt(7) - 3;
     }
 
+    public TestPolygonHitbox getTestPolygonHitbox() {
+        return testPolygonHitbox;
+    }
+
     public void addToRemove(GameObject go) {
         objectsToRemove.add(go);
     }
 
-    public void addProjectile(Projectile go) {
-        projectiles.add(go);
+    public void addWeapon(Weapon go) {
+        weapons.add(go);
+    }
+
+    public void addDamageText(DamageText go) {
+        damageTexts.add(go);
     }
 
     public void addExplosion(Explosion go) {

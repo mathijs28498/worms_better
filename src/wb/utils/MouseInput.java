@@ -1,14 +1,12 @@
 package wb.utils;
 
 import wb.GameHandler;
-import wb.gameObjects.projectiles.BasicRocket;
-import wb.gameObjects.Worm;
+import wb.gameObjects.worms.Worm;
 import wb.hitboxes.Vector2f;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.List;
 
 public class MouseInput implements MouseListener, MouseMotionListener {
 
@@ -27,7 +25,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     public void mousePressed(MouseEvent e) {
 
         if (gameHandler.canShoot()) {
-            gameHandler.shoot(e.getX() + offset, e.getY() + offset);
+            gameHandler.shoot();
         }
 
     }
@@ -60,6 +58,7 @@ public class MouseInput implements MouseListener, MouseMotionListener {
     private void mouseMovement(int x, int y) {
         for (Worm worm : gameHandler.getWorms()) {
             worm.setMouse(x + offset, y + offset);
+//            gameHandler.getTestPolygonHitbox().setLocation(new Vector2f(x + offset, y + offset));
         }
     }
 }
