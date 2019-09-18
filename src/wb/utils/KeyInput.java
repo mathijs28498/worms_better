@@ -11,10 +11,8 @@ import static java.awt.event.KeyEvent.*;
 public class KeyInput implements KeyListener {
 
     private GameHandler gameHandler;
-    private Game game;
 
     public KeyInput(GameHandler gameHandler) {
-        this.game = game;
         this.gameHandler = gameHandler;
     }
 
